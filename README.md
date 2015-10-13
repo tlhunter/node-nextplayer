@@ -1,14 +1,10 @@
 # NextPlayer
 
-NextPlayer is a tool for keeping track of whose turn it is, Round Robin style. Players can be added or removed at will.
+NextPlayer is a tool for keeping track of whose turn it is, Round Robin style. Players can be added or removed at will. NextPlayer relies on Redis for tracking data. This is a very generic module, it can be used for anything which needs to track Round Robin data where entries can be dynamically added and removed. All operations will be atomic, relying on Redis EVAL scripts.
 
-NextPlayer relies on Redis for tracking data.
+If there's an existing module which does the same thing please let me know!
 
-This is a very generic module, it can be used for anything which needs to track Round Robin data where entries can be dynamically added and removed.
-
-PSA: If there's an existing module which works this way let me know!
-
-## Visual Explanation
+## Conceptual Overview
 
 If you add four players:
 
