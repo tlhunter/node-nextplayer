@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "description": "Redis backed round robin implementation",
   "main": "index.js",
+  "directories": {
+    "test": "test",
+    "scripts": "scripts"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "keywords": [
     "round",
@@ -12,6 +16,10 @@
   ],
   "author": "Thomas Hunter <me@thomashunter.name>",
   "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlhunter/node-nextplayer.git"
+  },
   "dependencies": {
     "bluebird": "^2.10.2",
     "lured": "0.0.3",
@@ -19,5 +27,9 @@
   },
   "devDependencies": {
     "mocha": "^2.3.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/tlhunter/node-nextplayer/issues"
+  },
+  "homepage": "https://github.com/tlhunter/node-nextplayer"
 }
