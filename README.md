@@ -4,30 +4,42 @@ NextPlayer is a tool for keeping track of whose turn it is, Round Robin style. P
 
 If there's an existing module which does the same thing please let me know!
 
-## Conceptual Overview
+## Example Scenario
 
-If you add four players:
+### If you add four players:
 
 ```
-List:       Bob, Joe, Sue, Sam
+Action:     add(Bob, Joe, Sue, Sam);
+Internal:   Bob, Joe, Sue, Sam
 Pointer:    Bob
 Returns:    Bob, Joe, Sue, Sam
 ```
 
-Then you step the game:
+### Then you step the game:
 
 ```
-List:       Bob, Joe, Sue, Sam
+Action:     step()
+Internal:   Bob, Joe, Sue, Sam
 Pointer:    Joe
 Returns:    Joe, Sue, Sam, Bob
 ```
 
-Then you remove the current player:
+### Then you remove the current player:
 
 ```
-List:       Bob, Sue, Sam
+Action:     remove(Joe)
+Internal:   Bob, Sue, Sam
 Pointer:    Sue
 Returns:    Sue, Sam, Bob
+```
+
+### And if you add another player:
+
+```
+Action:     add(Jan)
+Internal:   Bob, Jan, Sue, Sam
+Pointer:    Sue
+Returns:    Sue, Sam, Bob, Jan
 ```
 
 ## Sample Usage
