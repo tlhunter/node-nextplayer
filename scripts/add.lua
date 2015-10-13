@@ -1,0 +1,2 @@
+-- Adds a new player to the list
+-- Adds them to the list in a way that they'll be last to perform

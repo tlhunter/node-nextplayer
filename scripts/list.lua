@@ -1,0 +1,2 @@
+-- Gets a list of all players
+-- First item should be current, others should follow

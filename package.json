@@ -1,0 +1,23 @@
+{
+  "name": "nextplayer",
+  "version": "0.1.0",
+  "description": "Redis backed round robin implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "round",
+    "robin"
+  ],
+  "author": "Thomas Hunter <me@thomashunter.name>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "bluebird": "^2.10.2",
+    "lured": "0.0.3",
+    "redis": "^2.2.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
+}
