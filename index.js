@@ -26,12 +26,14 @@ NextPlayer.prototype.add = function(namespace, players, callback) {
 
   this.redis
     .multi()
-    .rpush(key, players)
+    .lpush(key, players)
     .lrange(key, 0, -1)
     .exec(function(err, results) {
       if (err) {
         return callback(err);
       }
+
+      results[1].reverse();
 
       callback(null, results[1]);
   });
@@ -49,6 +51,8 @@ NextPlayer.prototype.remove = function(namespace, player, callback) {
         return callback(err);
       }
 
+      results[1].reverse();
+
       callback(null, results[1]);
   });
 };
@@ -65,7 +69,9 @@ NextPlayer.prototype.step = function(namespace, callback) {
         return callback(err);
       }
 
-      callback(err, results[1]);
+      results[1].reverse();
+
+      callback(null, results[1]);
   });
 };
 
@@ -77,7 +83,7 @@ NextPlayer.prototype.destroy = function(namespace, callback) {
       return callback(err);
     }
 
-    callback(err);
+    callback(null);
   });
 };
 
@@ -85,15 +91,27 @@ NextPlayer.prototype.list = function(namespace, callback) {
   var key = this._key(namespace);
 
   this.redis.lrange(key, 0, -1, function(err, list) {
-    callback(err, list);
+    if (err) {
+      return callback(err);
+    }
+
+    list.reverse();
+
+    callback(null, list);
   });
 };
 
 NextPlayer.prototype.current = function(namespace, callback) {
   var key = this._key(namespace);
 
-  this.redis.lrange(key, 0, 1, function(err, list) {
-    callback(err, list[0]);
+  this.redis.lrange(key, -1, -1, function(err, list) {
+    if (err) {
+      return callback(err);
+    }
+
+    list.reverse();
+
+    callback(null, list[0]);
   });
 };
 

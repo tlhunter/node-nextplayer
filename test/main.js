@@ -15,8 +15,8 @@ describe("Next Player", function() {
     nextplayer.destroy(namespace, done);
   });
 
-  describe("Typical Interaction", function() {
-    it("Adds a single player", function(done) {
+  describe("typical interaction", function() {
+    it("adds a single player", function(done) {
       nextplayer.add(namespace, 'bob', function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, ['bob']);
@@ -24,7 +24,7 @@ describe("Next Player", function() {
       });
     });
 
-    it("Should have one player", function(done) {
+    it("should have one player", function(done) {
       nextplayer.list(namespace, function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, ['bob']);
@@ -32,7 +32,7 @@ describe("Next Player", function() {
       });
     });
 
-    it("Should have the correct current player", function(done) {
+    it("should have the correct current player", function(done) {
       nextplayer.current(namespace, function(err, current) {
         assert.ifError(err);
         assert.deepEqual(current, 'bob');
@@ -40,7 +40,7 @@ describe("Next Player", function() {
       });
     });
 
-    it("Adds multiple players as an array", function(done) {
+    it("adds multiple players as an array", function(done) {
       nextplayer.add(namespace, ["sue", "joe", "ron"], function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, ['bob', 'sue', 'joe', 'ron']);
@@ -48,7 +48,7 @@ describe("Next Player", function() {
       });
     });
 
-    it("Should have several players", function(done) {
+    it("should have several players", function(done) {
       nextplayer.list(namespace, function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, ['bob', 'sue', 'joe', 'ron']);
@@ -56,30 +56,46 @@ describe("Next Player", function() {
       });
     });
 
-    it("Should have the correct current player", function(done) {
+    it("should properly cycle through players", function(done) {
+      nextplayer.step(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['sue', 'joe', 'ron', 'bob']);
+        done();
+      });
+    });
+
+    it("should properly cycle through players AGAIN", function(done) {
+      nextplayer.step(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['joe', 'ron', 'bob', 'sue']);
+        done();
+      });
+    });
+
+    it("should have the correct current player", function(done) {
       nextplayer.current(namespace, function(err, current) {
         assert.ifError(err);
-        assert.deepEqual(current, 'bob');
+        assert.deepEqual(current, 'joe');
         done();
       });
     });
 
-    it("Should handle removing the current player", function(done) {
-      nextplayer.remove(namespace, 'bob', function(err, list) {
+    it("should handle removing the current player", function(done) {
+      nextplayer.remove(namespace, 'joe', function(err, list) {
         assert.ifError(err);
-        assert.deepEqual(list, ['sue', 'joe', 'ron']);
+        assert.deepEqual(list, ['ron', 'bob', 'sue']);
         done();
       });
     });
 
-    it("Should destroy the collection", function(done) {
+    it("should destroy the collection", function(done) {
       nextplayer.destroy(namespace, function(err) {
         assert.ifError(err);
         done();
       });
     });
 
-    it("Returns an empty array if no key", function(done) {
+    it("returns an empty array if no key", function(done) {
       nextplayer.list(namespace, function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, []);
@@ -87,7 +103,7 @@ describe("Next Player", function() {
       });
     });
 
-    it("Returns a null if record doesn't exist", function(done) {
+    it("returns a null if record doesn't exist", function(done) {
       nextplayer.current(namespace, function(err, current) {
         assert.ifError(err);
         assert.deepEqual(current, null);
