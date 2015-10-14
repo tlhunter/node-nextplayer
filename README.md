@@ -50,8 +50,6 @@ Creates a new instance of NextPlayer. An instance isn't tied to a particular gam
 * **redis**: (Optional) A fully configured and instantiated redis client
 * **redisOptions**: (Optional) A list of redis connection options, defaults to local
 
-#### Example
-
 ```javascript
 var nextplayer = new NextPlayer({
   keyPrefix: 'list-',
@@ -62,8 +60,6 @@ var nextplayer = new NextPlayer({
 ### add()
 
 If an array is provided, inserts a list of players to go last. Otherwise, adds a single player.
-
-#### Example
 
 ```javascript
 nextplayer.add(namespace, "tod", callback);
@@ -76,8 +72,6 @@ function callback(err, newList) {}
 
 Removes a single player, by identifier, from the list.
 
-#### Example
-
 ```javascript
 nextplayer.remove(namespace, "ted", callback);
 nextplayer.remove(namespace, ["dan", "dre"], callback);
@@ -88,8 +82,6 @@ function callback(err, newList) {}
 ### step()
 
 Cycles through the players in the list, so the current player is now the last player, and the next becomes current.
-
-#### Example
 
 ```javascript
 nextplayer.step(namespace, callback);
