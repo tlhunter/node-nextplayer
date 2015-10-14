@@ -12,9 +12,7 @@ describe("Next Player", function() {
       keyPrefix: 'test-list-'
     });
 
-    nextplayer.destroy(namespace, function(err) {
-      done();
-    });
+    nextplayer.destroy(namespace, done);
   });
 
   describe("Typical Interaction", function() {

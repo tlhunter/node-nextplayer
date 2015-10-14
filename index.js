@@ -73,8 +73,8 @@ NextPlayer.prototype.destroy = function(namespace, callback) {
   var key = this._key(namespace);
 
   this.redis.del(key, function(err, count) {
-    if (err || count !== 1) {
-      return callback(err || true);
+    if (err) {
+      return callback(err);
     }
 
     callback(err);
