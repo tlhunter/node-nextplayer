@@ -63,7 +63,7 @@ var nextplayer = new NextPlayer({
 });
 ```
 
-### add(`namespace`, `identifiers`, `callback`)
+### .add(`namespace`, `identifiers`, `callback`)
 
 If an array is provided, inserts a list of players to go last. Otherwise, adds a single player.
 
@@ -74,7 +74,7 @@ nextplayer.add(namespace, ["bev", "jim"], callback);
 function callback(err, newList) {}
 ```
 
-### remove(`namespace`, `identifier`, `callback`)
+### .remove(`namespace`, `identifier`, `callback`)
 
 Removes a single player, by identifier, from the list.
 
@@ -85,7 +85,7 @@ nextplayer.remove(namespace, ["dan", "dre"], callback);
 function callback(err, newList) {}
 ```
 
-### step(`namespace`, `callback`)
+### .step(`namespace`, `callback`)
 
 Cycles through the players in the list, so the current player is now the last player, and the next becomes current.
 
@@ -95,7 +95,7 @@ nextplayer.step(namespace, callback);
 function callback(err, newList) {}
 ```
 
-### list(`namespace`, `callback`)
+### .list(`namespace`, `callback`)
 
 Gets an array of all players in the list, starting with the current player.
 
@@ -105,7 +105,7 @@ nextplayer.list(namespace, callback);
 function callback(err, list) {}
 ```
 
-### current(`namespace`, `callback`)
+### .current(`namespace`, `callback`)
 
 Returns just the current player from the list.
 
@@ -115,7 +115,7 @@ nextplayer.current(namespace, callback);
 function callback(err, current) {}
 ```
 
-### destroy(`namespace`, `callback`)
+### .destroy(`namespace`, `callback`)
 
 Destroys all keys associated with the provided namespace. Doesn't destroy the NextPlayer instance.
 
