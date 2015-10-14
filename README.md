@@ -36,6 +36,12 @@ nextplayer.add(ns, ["Larry", "Curly", "Shemp", "Moe"], function(err, list) {
 });
 ```
 
+## Installation
+
+```bash
+npm install nextplayer
+```
+
 ## Methods
 
 Note: If you don't provide a callback, each method will return a Promise.
@@ -57,7 +63,7 @@ var nextplayer = new NextPlayer({
 });
 ```
 
-### add()
+### add(`namespace`, `identifiers`, `callback`)
 
 If an array is provided, inserts a list of players to go last. Otherwise, adds a single player.
 
@@ -68,7 +74,7 @@ nextplayer.add(namespace, ["bev", "jim"], callback);
 function callback(err, newList) {}
 ```
 
-### remove()
+### remove(`namespace`, `identifier`, `callback`)
 
 Removes a single player, by identifier, from the list.
 
@@ -79,7 +85,7 @@ nextplayer.remove(namespace, ["dan", "dre"], callback);
 function callback(err, newList) {}
 ```
 
-### step()
+### step(`namespace`, `callback`)
 
 Cycles through the players in the list, so the current player is now the last player, and the next becomes current.
 
@@ -89,7 +95,7 @@ nextplayer.step(namespace, callback);
 function callback(err, newList) {}
 ```
 
-### list()
+### list(`namespace`, `callback`)
 
 Gets an array of all players in the list, starting with the current player.
 
@@ -99,7 +105,7 @@ nextplayer.list(namespace, callback);
 function callback(err, list) {}
 ```
 
-### current()
+### current(`namespace`, `callback`)
 
 Returns just the current player from the list.
 
@@ -109,7 +115,7 @@ nextplayer.current(namespace, callback);
 function callback(err, current) {}
 ```
 
-### destroy()
+### destroy(`namespace`, `callback`)
 
 Destroys all keys associated with the provided namespace. Doesn't destroy the NextPlayer instance.
 
@@ -117,10 +123,4 @@ Destroys all keys associated with the provided namespace. Doesn't destroy the Ne
 nextplayer.destroy(namespace, callback);
 
 function callback(err) {}
-```
-
-## Installation
-
-```bash
-npm install nextplayer
 ```
