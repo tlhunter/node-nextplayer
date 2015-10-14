@@ -68,35 +68,53 @@ If an array is provided, inserts a list of players to go last. Otherwise, adds a
 ```javascript
 nextplayer.add(namespace, "tod", callback);
 nextplayer.add(namespace, ["bev", "jim"], callback);
+
+function callback(err, newList) {}
 ```
 
 ### remove()
 
-If an array is provided, removes each of the listed players. Otherwise, removes a single player.
+Removes a single player, by identifier, from the list.
 
 #### Example
 
 ```javascript
 nextplayer.remove(namespace, "ted", callback);
 nextplayer.remove(namespace, ["dan", "dre"], callback);
+
+function callback(err, newList) {}
 ```
 
 ### step()
 
-Iterates to the next player in the list. Of course, if this is the end of the list, it will wrap back to the beginning.
+Cycles through the players in the list, so the current player is now the last player, and the next becomes current.
 
 #### Example
 
 ```javascript
 nextplayer.step(namespace, callback);
+
+function callback(err, newList) {}
 ```
 
 ### list()
 
-Gets a list of all players, starting with the current player.
+Gets an array of all players in the list, starting with the current player.
 
 ```javascript
 nextplayer.list(namespace, callback);
+
+function callback(err, list) {}
+```
+
+### current()
+
+Returns just the current player from the list.
+
+```javascript
+nextplayer.current(namespace, callback);
+
+function callback(err, current) {}
 ```
 
 ### destroy()
@@ -105,6 +123,8 @@ Destroys all keys associated with the provided namespace. Doesn't destroy the Ne
 
 ```javascript
 nextplayer.destroy(namespace, callback);
+
+function callback(err) {}
 ```
 
 ## Installation
