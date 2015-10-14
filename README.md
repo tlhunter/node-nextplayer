@@ -10,8 +10,7 @@ If there's an existing module which does the same thing please let me know!
 
 ```
 Action:     add(Bob, Joe, Sue, Sam);
-Internal:   Bob, Joe, Sue, Sam
-Pointer:    Bob
+Current:    Bob
 Returns:    Bob, Joe, Sue, Sam
 ```
 
@@ -19,8 +18,7 @@ Returns:    Bob, Joe, Sue, Sam
 
 ```
 Action:     step()
-Internal:   Bob, Joe, Sue, Sam
-Pointer:    Joe
+Current:    Joe
 Returns:    Joe, Sue, Sam, Bob
 ```
 
@@ -28,8 +26,7 @@ Returns:    Joe, Sue, Sam, Bob
 
 ```
 Action:     remove(Joe)
-Internal:   Bob, Sue, Sam
-Pointer:    Sue
+Current:    Sue
 Returns:    Sue, Sam, Bob
 ```
 
@@ -37,8 +34,7 @@ Returns:    Sue, Sam, Bob
 
 ```
 Action:     add(Jan)
-Internal:   Bob, Jan, Sue, Sam
-Pointer:    Sue
+Current:    Sue
 Returns:    Sue, Sam, Bob, Jan
 ```
 

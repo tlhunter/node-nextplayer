@@ -1,2 +1,0 @@
--- Makes the next player in the list the current player
--- If at the end of the logical list, should wrap around

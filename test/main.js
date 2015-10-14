@@ -3,60 +3,76 @@
 var assert = require('assert');
 var NextPlayer = require('../index.js');
 
-// TODO
-
 describe("Next Player", function() {
   var namespace = "32D3354E-716E-11E5-A56E-8A57BE0520A2";
+  var nextplayer;
 
-  beforeAll(function() {
-    var nextplayer = new NextPlayer({
-      pointerKey: 'current-',
-      listKey: 'players-'
+  before(function() {
+     nextplayer = new NextPlayer({
+      keyPrefix: 'test-list-'
     });
   });
 
   describe("Typical Interaction", function() {
     it("Adds a single player", function(done) {
-      nextplayer.add('bob', function(err) {
-        assert.equal(err, null);
-        done();
-      });
-    });
-
-    it("Should have one player", function(done) {
-      nextplayer.list(function(err, list) {
-        assert.equal(err, null);
+      nextplayer.add(namespace, 'bob', function(err, list) {
+        assert.ifError(err);
         assert.deepEqual(list, ['bob']);
         done();
       });
     });
 
-    it("Should have the correct pointer", function(done) {
-      nextplayer.current(function(err, current) {
-        assert.equal(err, null);
-        assert.deepEqual(current, ['bob']);
+    it("Should have one player", function(done) {
+      nextplayer.list(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['bob']);
+        done();
+      });
+    });
+
+    it("Should have the correct current player", function(done) {
+      nextplayer.current(namespace, function(err, current) {
+        assert.ifError(err);
+        assert.deepEqual(current, 'bob');
         done();
       });
     });
 
     it("Adds multiple players as an array", function(done) {
-      nextplayer.add(["sue", "joe", "ron"], function() {
-        done();
-      });
-    });
-
-    it("Should have several players", function(done) {
-      nextplayer.list(function(err, list) {
-        assert.equal(err, null);
+      nextplayer.add(namespace, ["sue", "joe", "ron"], function(err, list) {
+        assert.ifError(err);
         assert.deepEqual(list, ['bob', 'sue', 'joe', 'ron']);
         done();
       });
     });
 
-    it("Should have the correct pointer", function(done) {
-      nextplayer.current(function(err, current) {
-        assert.equal(err, null);
-        assert.deepEqual(current, ['bob']);
+    it("Should have several players", function(done) {
+      nextplayer.list(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['bob', 'sue', 'joe', 'ron']);
+        done();
+      });
+    });
+
+    it("Should have the correct current player", function(done) {
+      nextplayer.current(namespace, function(err, current) {
+        assert.ifError(err);
+        assert.deepEqual(current, 'bob');
+        done();
+      });
+    });
+
+    it("Should handle removing the current player", function(done) {
+      nextplayer.remove(namespace, 'bob', function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['sue', 'joe', 'ron']);
+        done();
+      });
+    });
+
+    it("Should destroy the collection", function(done) {
+      nextplayer.destroy(namespace, function(err) {
+        assert.ifError(err);
         done();
       });
     });

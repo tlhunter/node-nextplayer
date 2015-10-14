@@ -1,6 +1,6 @@
 'use strict';
 
-var redis = require('redis');
+var Redis = require('redis');
 var bluebird = require('bluebird');
 var lured = require('lured');
 
@@ -13,52 +13,88 @@ var NextPlayer = function(config) {
     config = {};
   }
 
-  this.pointerKey = config.pointerKey || 'current-';
-  this.listKey = config.listKey || 'list-';
+  this.keyPrefix = config.keyPrefix || 'list-';
+  this.redis = Redis.createClient(); // TODO: Config params
 };
 
-NextPlayer.prototype._getPointerKey = function(namespace) {
-  return this.pointerKey + namespace;
-};
-
-NextPlayer.prototype._getListKey = function(namespace) {
- return this.listKey + namespace;
+NextPlayer.prototype._key = function(namespace) {
+ return this.keyPrefix + namespace;
 };
 
 NextPlayer.prototype.add = function(namespace, players, callback) {
-  callback(null);
+  var key = this._key(namespace);
+
+  this.redis
+    .multi()
+    .rpush(key, players)
+    .lrange(key, 0, -1)
+    .exec(function(err, results) {
+      if (err) {
+        return callback(err);
+      }
+
+      callback(null, results[1]);
+  });
 };
 
-NextPlayer.prototype.remove = function(namespace, players, callback) {
-  var list = [];
-  var current = '';
-  var currentChanged = false;
+NextPlayer.prototype.remove = function(namespace, player, callback) {
+  var key = this._key(namespace);
 
-  callback(null, {
-    list: list,
-    current: current,
-    currentChanged: currentChanged
+  this.redis
+    .multi()
+    .lrem(key, 0, player)
+    .lrange(key, 0, -1)
+    .exec(function(err, results) {
+      if (err) {
+        return callback(err);
+      }
+
+      callback(null, results[1]);
   });
 };
 
 NextPlayer.prototype.step = function(namespace, callback) {
-  var current = '';
+  var key = this._key(namespace);
 
-  callback(null, current);
+  this.redis
+    .multi()
+    .rpoplpush(key, key)
+    .lrange(key, 0, -1)
+    .exec(function(err, results) {
+      if (err) {
+        return callback(err);
+      }
+
+      callback(err, results[1]);
+  });
 };
 
 NextPlayer.prototype.destroy = function(namespace, callback) {
-  callback(null);
+  var key = this._key(namespace);
+
+  this.redis.del(key, function(err, count) {
+    if (err || count !== 1) {
+      callback(err || true);
+    }
+
+    callback(err);
+  });
 };
 
 NextPlayer.prototype.list = function(namespace, callback) {
-  var list = [];
+  var key = this._key(namespace);
 
-  callback(null, list);
+  this.redis.lrange(key, 0, -1, function(err, list) {
+    callback(err, list);
+  });
 };
 
-nextPlayer.prototype.current = function(namespace, callback) {
-  var current = '';
+NextPlayer.prototype.current = function(namespace, callback) {
+  var key = this._key(namespace);
 
-  callback(null, current);
+  this.redis.lrange(key, 0, 1, function(err, list) {
+    callback(err, list[0]);
+  });
 };
+
+module.exports = NextPlayer;

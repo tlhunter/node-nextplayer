@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "bluebird": "^2.10.2",
-    "lured": "0.0.3",
     "redis": "^2.2.1"
   },
   "devDependencies": {

@@ -1,2 +1,0 @@
--- Removes a player or players from the list
--- If the current player is removed, needs to set a correct new player
