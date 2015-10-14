@@ -2,7 +2,6 @@
 
 var Redis = require('redis');
 var bluebird = require('bluebird');
-var lured = require('lured');
 
 if (typeof Promise === 'undefined') {
   Promise = bluebird;
@@ -14,7 +13,8 @@ var NextPlayer = function(config) {
   }
 
   this.keyPrefix = config.keyPrefix || 'list-';
-  this.redis = Redis.createClient(); // TODO: Config params
+
+  this.redis = config.redis ? config.redis : Redis.createClient(config.redisOptions);
 };
 
 NextPlayer.prototype._key = function(namespace) {
@@ -74,7 +74,7 @@ NextPlayer.prototype.destroy = function(namespace, callback) {
 
   this.redis.del(key, function(err, count) {
     if (err || count !== 1) {
-      callback(err || true);
+      return callback(err || true);
     }
 
     callback(err);

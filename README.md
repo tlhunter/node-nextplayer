@@ -69,15 +69,16 @@ Creates a new instance of NextPlayer. An instance isn't tied to a particular gam
 
 #### Options
 
-* **pointerKey**: A String key representing the ID of the current player
-* **listKey**: A List key representing the list of all players
+* **keyPrefix**: A List key representing the list of all players
+* **redis**: (Optional) A fully configured and instantiated redis client
+* **redisOptions**: (Optional) A list of redis connection options, defaults to local
 
 #### Example
 
 ```javascript
 var nextplayer = new NextPlayer({
-  pointerKey: 'current-',
-  listKey: 'players-'
+  keyPrefix: 'list-',
+  redis: redis.createClient({host: 'localhost', port: 6370})
 });
 ```
 

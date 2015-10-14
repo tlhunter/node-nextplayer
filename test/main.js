@@ -7,9 +7,13 @@ describe("Next Player", function() {
   var namespace = "32D3354E-716E-11E5-A56E-8A57BE0520A2";
   var nextplayer;
 
-  before(function() {
+  before(function(done) {
      nextplayer = new NextPlayer({
       keyPrefix: 'test-list-'
+    });
+
+    nextplayer.destroy(namespace, function(err) {
+      done();
     });
   });
 
@@ -73,6 +77,22 @@ describe("Next Player", function() {
     it("Should destroy the collection", function(done) {
       nextplayer.destroy(namespace, function(err) {
         assert.ifError(err);
+        done();
+      });
+    });
+
+    it("Returns an empty array if no key", function(done) {
+      nextplayer.list(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, []);
+        done();
+      });
+    });
+
+    it("Returns a null if record doesn't exist", function(done) {
+      nextplayer.current(namespace, function(err, current) {
+        assert.ifError(err);
+        assert.deepEqual(current, null);
         done();
       });
     });
