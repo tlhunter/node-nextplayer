@@ -1,7 +1,7 @@
 {
   "name": "nextplayer",
   "version": "0.1.0",
-  "description": "Redis backed round robin implementation",
+  "description": "Redis backed Round-Robin module",
   "main": "index.js",
   "directories": {
     "test": "test",
@@ -12,7 +12,9 @@
   },
   "keywords": [
     "round",
-    "robin"
+    "robin",
+    "game",
+    "players"
   ],
   "author": "Thomas Hunter <me@thomashunter.name>",
   "license": "BSD-2-Clause",
@@ -21,7 +23,6 @@
     "url": "https://github.com/tlhunter/node-nextplayer.git"
   },
   "dependencies": {
-    "bluebird": "^2.10.2",
     "redis": "^2.2.1"
   },
   "devDependencies": {

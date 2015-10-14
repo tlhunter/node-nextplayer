@@ -1,11 +1,6 @@
 'use strict';
 
 var Redis = require('redis');
-var bluebird = require('bluebird');
-
-if (typeof Promise === 'undefined') {
-  Promise = bluebird;
-}
 
 var NextPlayer = function(config) {
   if (!config) {
