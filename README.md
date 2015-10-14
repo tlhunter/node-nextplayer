@@ -44,7 +44,7 @@ npm install nextplayer
 
 ## Methods
 
-Note: If you don't provide a callback, each method will return a Promise.
+Note: If you want to use a Promise-based API, consider using [Bluebird's Promisfy All](https://github.com/petkaantonov/bluebird/blob/master/API.md#promisepromisifyallobject-target--object-options---object) feature.
 
 ### Constructor
 
