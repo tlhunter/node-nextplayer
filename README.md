@@ -1,58 +1,35 @@
 # NextPlayer
 
-NextPlayer is a tool for keeping track of whose turn it is, Round Robin style. Players can be added or removed at will. NextPlayer relies on Redis for tracking data. This is a very generic module, it can be used for anything which needs to track Round Robin data where entries can be dynamically added and removed. All operations will be atomic, relying on Redis EVAL scripts.
+NextPlayer is a tool for keeping track of whose turn it is, Round Robin style.
+Players can be added or removed at will.
+NextPlayer relies on Redis for tracking data.
+This is a very generic module, it can be used for anything which needs to track Round Robin data where entries can be dynamically added and removed.
+Operations are  atomic, relying on Redis MULTI calls.
 
 If there's an existing module which does the same thing please let me know!
 
-## Example Scenario
-
-### If you add four players:
-
-```
-Action:     add(Bob, Joe, Sue, Sam);
-Current:    Bob
-Returns:    Bob, Joe, Sue, Sam
-```
-
-### Then you step the game:
-
-```
-Action:     step()
-Current:    Joe
-Returns:    Joe, Sue, Sam, Bob
-```
-
-### Then you remove the current player:
-
-```
-Action:     remove(Joe)
-Current:    Sue
-Returns:    Sue, Sam, Bob
-```
-
-### And if you add another player:
-
-```
-Action:     add(Jan)
-Current:    Sue
-Returns:    Sue, Sam, Bob, Jan
-```
-
-## Sample Usage
+## Example Usage
 
 ```javascript
-var NextPlayer = require('nextplayer');
+var NextPlayer = require('./index.js');
 var nextplayer = new NextPlayer();
 var ns = "game-12345";
 
-nextplayer.add(ns, ["bob", "joe", "sue", "tom"], function(err) {
-  nextplayer.remove(ns, "joe", function(err, current, list) {
-    console.log(current); // "bob"
-    console.log(list); // ["bob", "sue", "tom"];
-    nextplayer.step(ns, function(err, current) {
-      console.log(current); // "sue"
-      nextplayer.list(ns, function(err, list) {
-        console.log(list); // ["sue", "tom", "bob"]
+nextplayer.add(ns, ["Larry", "Curly", "Shemp", "Moe"], function(err, list) {
+  console.log('ADD', list); // Larry, Curly, Shemp, Moe
+  nextplayer.remove(ns, "Shemp", function(err, list) {
+    console.log('REMOVE', list); // Larry, Curly, Moe
+    nextplayer.step(ns, function(err, list) {
+      console.log('STEP1', list); // Curly, Moe, Larry
+      nextplayer.step(ns, function(err, list) {
+        console.log('STEP2', list); // Moe, Larry, Curly
+        nextplayer.list(ns, function(err, list) {
+          console.log('LIST', list); // Moe, Larry, Curly
+          nextplayer.destroy(ns, function(err) {
+            console.log('FIN');
+            process.exit();
+          });
+        });
       });
     });
   });
