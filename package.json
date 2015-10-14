@@ -4,8 +4,7 @@
   "description": "Redis backed Round-Robin module",
   "main": "index.js",
   "directories": {
-    "test": "test",
-    "scripts": "scripts"
+    "test": "test"
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
