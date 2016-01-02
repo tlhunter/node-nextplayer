@@ -74,6 +74,17 @@ nextplayer.add(namespace, ["bev", "jim"], callback);
 function callback(err, newList) {}
 ```
 
+### .set(`namespace`, `identifiers`, `callback`)
+
+Much like `add()`, except any players already in the list will be replaced with this entirely new list.
+
+```javascript
+nextplayer.set(namespace, "tod", callback);
+nextplayer.set(namespace, ["bev", "jim"], callback);
+
+function callback(err, newList) {}
+```
+
 ### .remove(`namespace`, `identifier`, `callback`)
 
 Removes a single player, by identifier, from the list.

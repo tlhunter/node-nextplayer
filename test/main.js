@@ -15,7 +15,7 @@ describe("Next Player", function() {
     nextplayer.destroy(namespace, done);
   });
 
-  describe("typical interaction", function() {
+  describe("Integration Tests (inter-dependant)", function() {
     it("adds a single player", function(done) {
       nextplayer.add(namespace, 'bob', function(err, list) {
         assert.ifError(err);
@@ -84,6 +84,22 @@ describe("Next Player", function() {
       nextplayer.remove(namespace, 'joe', function(err, list) {
         assert.ifError(err);
         assert.deepEqual(list, ['ron', 'bob', 'sue']);
+        done();
+      });
+    });
+
+    it("should handle setting a new list of players", function(done) {
+      nextplayer.set(namespace, ['jon', 'roy', 'jay'], function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['jon', 'roy', 'jay']);
+        done();
+      });
+    });
+
+    it("should get that same list back", function(done) {
+      nextplayer.list(namespace, function(err, list) {
+        assert.ifError(err);
+        assert.deepEqual(list, ['jon', 'roy', 'jay']);
         done();
       });
     });

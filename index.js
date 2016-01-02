@@ -34,6 +34,25 @@ NextPlayer.prototype.add = function(namespace, players, callback) {
   });
 };
 
+NextPlayer.prototype.set = function(namespace, players, callback) {
+  var key = this._key(namespace);
+
+  this.redis
+    .multi()
+    .del(key)
+    .lpush(key, players)
+    .lrange(key, 0, -1)
+    .exec(function(err, results) {
+      if (err) {
+        return callback(err);
+      }
+
+      results[2].reverse();
+
+      callback(null, results[2]);
+  });
+};
+
 NextPlayer.prototype.remove = function(namespace, player, callback) {
   var key = this._key(namespace);
 
