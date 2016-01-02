@@ -91,7 +91,6 @@ Removes a single player, by identifier, from the list.
 
 ```javascript
 nextplayer.remove(namespace, "ted", callback);
-nextplayer.remove(namespace, ["dan", "dre"], callback);
 
 function callback(err, newList) {}
 ```
